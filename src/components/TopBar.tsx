@@ -1,5 +1,7 @@
 // src/components/Topbar.tsx
 import { FaBars } from 'react-icons/fa';
+import Logo from '../assets/images/Logo.png'
+import { Link } from 'react-router-dom';
 
 interface TopbarProps {
   collapsed: boolean;
@@ -21,7 +23,12 @@ const Topbar: React.FC<TopbarProps> = ({  toggleCollapse, toggleMobile }) => {
       >
         <FaBars size={24} className='cursor-pointer'/>
       </button>
-      <div className="text-xl font-bold text-primary py-2">Agent Panel</div>
+      <div>
+        <Link to={"/"}>
+          <img src={Logo} alt="Castle luxury" className='w-[100px] md:w-[130px]'/>
+        </Link>
+        
+      </div>
       <div>{/* Add right side stuff here */}</div>
     </header>
   );
