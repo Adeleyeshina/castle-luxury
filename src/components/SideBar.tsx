@@ -1,4 +1,3 @@
-// src/components/Sidebar.tsx
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import { navLink } from '../data';

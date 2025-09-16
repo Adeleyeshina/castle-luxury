@@ -1,24 +1,44 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { allAgent } from "../api/agentService";
-import type { AgentProps } from "../api/agentService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { allAgent, deleteAgent } from "../api/agentService";
+import type { AgentProps} from "../api/agentService";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { MdModeEdit } from "react-icons/md";
 import { FaTrashCan } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { RxCross2 } from "react-icons/rx";
+import toast from "react-hot-toast";
 
 const Agents: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [modal, setModal] = useState(false)
+  const [agentId, setAgentId] = useState("")
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const { data, isLoading, isError, error } = useQuery<AgentProps[]>({
     queryKey: ["allAgent"],
     queryFn: allAgent,
   });
 
+  const {mutate, isPending} = useMutation({
+    mutationKey : ['deleteAgent', agentId],
+    mutationFn : (id : string)=> deleteAgent(id),
+    onSuccess : (response) => {
+      toast.success(response.message || 'Deleted Successfully'),
+      setModal(false)
+      queryClient.invalidateQueries({
+        queryKey : ["allAgent"]
+      })
+    },
+    onError : (response :any) => {
+      toast.error(response.message || 'An Error occured')
+      setModal(false)
+    } 
+  })
   const agents: AgentProps[] = data || [];
 
   const filteredAgents = useMemo(() => {
@@ -113,6 +133,10 @@ const Agents: React.FC = () => {
     saveAs(blob, "agents.csv");
   };
 
+  const handleDeleteClick = (id: string) => {
+    setAgentId(id)
+    setModal(true)
+  }
   return (
     <div className="max-w-screen grid justify-center md:block mx-auto p-4 bg-white rounded shadow pr-5">
       <h1 className="text-2xl font-semibold mb-4 text-center md:text-left">All Agents</h1>
@@ -223,7 +247,7 @@ const Agents: React.FC = () => {
                   <td className="border border-gray-300 px-4 py-2">
                     <button
                       className=' py-2 px-2 rounded-md cursor-pointer text-red-500 transition-colors'
-
+                      onClick={() => handleDeleteClick(agent._id!)}
                     >
 
                       <FaTrashCan size={22} />
@@ -273,6 +297,45 @@ const Agents: React.FC = () => {
             Next
           </button>
         </div>
+      )}
+
+      {modal && (
+
+
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+    
+          <div
+            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            onClick={() => setModal(false)} 
+          ></div>
+
+    
+          <div className="relative z-10 p-6 bg-white rounded shadow-lg w-[90%] md:max-w-md text-center space-y-2">
+   
+            <div className="flex justify-end">
+              <button
+                onClick={() => setModal(false)}
+                className="text-gray-500 hover:text-gray-800 cursor-pointer"
+              >
+                <RxCross2 className="w-6 h-6" />
+              </button>
+            </div>
+
+          
+            <h2 className="text-xl font-semibold text-gray-800">Confirm Delete</h2>
+            <p className="text-sm text-gray-600 mt-2">
+              Are you sure you want to delete this agent? This action cannot be undone.
+            </p>
+
+            <button disabled={isPending} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-[0.7] cursor-pointer w-full"
+            onClick={()=>mutate(agentId)}
+            >
+             {isPending ? 'Deleting..' : 'Delete'}
+            </button>
+
+          </div>
+        </div>
+
       )}
     </div>
   );
