@@ -9,7 +9,7 @@ const App = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 overflow-x-hidden">
       <Sidebar
         collapsed={collapsed}
         setCollapsed={setCollapsed}
@@ -23,7 +23,7 @@ const App = () => {
           mobileOpen={mobileOpen}
           toggleMobile={() => setMobileOpen(!mobileOpen)}
         />
-        <main className="p-4">
+        <main className="p-4 max-w-full">
             <Outlet />
         </main>
       </div>

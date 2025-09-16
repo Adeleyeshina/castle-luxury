@@ -6,6 +6,7 @@ import Agents from './pages/Agents'
 import AddAgent from './pages/AddAgent'
 import NotFound from './pages/NotFound'
 import Logout from './pages/Logout'
+import UpdateAgent from './pages/UpdateAgent'
 
 
 
@@ -14,12 +15,13 @@ const App = () => {
     <Routes>
       <Route path='/login' element={<Login />} />
 
-      <Route path='/' element={<DashboardLayout />}>
-        <Route path='agents' element={<Agents />} />
-        <Route path='/add-agent' element={<AddAgent />} />
-        <Route path='/logout' element={<Logout  />} />
+      <Route element={<DashboardLayout />}>
+        <Route path='/' element={<Agents />} />
+        <Route path='add-agent' element={<AddAgent />} />
+        <Route path='update-agent/:id' element={<UpdateAgent />} />
+        <Route path='logout' element={<Logout />} />
       </Route>
-       <Route path='*' element={<NotFound />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   )
 }

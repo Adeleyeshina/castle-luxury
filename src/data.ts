@@ -11,7 +11,7 @@ export const navLink : NavLinkProps [] = [
     {
         icon: FaUsers,
         title: 'Agent List',
-        path: '/agents'
+        path: '/'
     },
     {
         icon: FaUserPlus,
