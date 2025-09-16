@@ -1,6 +1,6 @@
 // src/components/Sidebar.tsx
 import { NavLink } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import { navLink } from '../data';
 
 interface SidebarProps {
@@ -13,25 +13,38 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, mobileOpen, setMobileOpen }) => {
 
 
-  const renderNavItems = () =>
-    navLink.map((item, index) => {
-      const Icon = item.icon;
-      return (
-        <NavLink
-          key={index}
-          to={item.path}
-          className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-2 rounded-md transition-colors ${
-              isActive ? 'bg-primary text-white font-semibold' : 'text-white hover:bg-primary/80'
-            }`
-          }
-          onClick={() => setMobileOpen(false)}
-        >
-          <Icon className="text-2xl" />
-          {!collapsed && <span className="text-lg">{item.title}</span>}
-        </NavLink>
-      );
-    });
+  const renderNavItems = () => (
+    <>
+      {navLink.map((item, index) => {
+        const Icon = item.icon;
+        return (
+          <NavLink
+            key={index}
+            to={item.path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 rounded-md transition-colors ${isActive ? 'bg-primary text-white font-semibold' : 'text-white hover:bg-primary/80'
+              }`
+            }
+            onClick={() => setMobileOpen(false)}
+          >
+            <Icon className="text-2xl" />
+            {!collapsed && <span className="text-lg">{item.title}</span>}
+          </NavLink>
+        );
+      })}
+      <button
+        className=" flex items-center gap-3 px-4 py-2 rounded-md transition-colors hover:bg-primary/80 cursor-pointer"
+
+      >
+        <FaSignOutAlt className="mx-auto text-white" size={23}/>
+        {!collapsed && "Logout"}
+
+
+      </button>
+    </>
+  );
+
+
 
   return (
     <>
@@ -70,13 +83,12 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, mobileOpen, setMobileOpen 
       )}
 
       <div
-        className={`hidden md:flex flex-col h-screen bg-primary text-white transition-all duration-300 ${
-          collapsed ? 'w-20' : 'w-64'
-        }`}
+        className={`hidden md:flex flex-col h-screen bg-primary text-white transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'
+          }`}
       >
         <div className="flex items-center justify-between p-4 border-b border-white/20 cursor-pointer">
           {!collapsed && <h1 className="text-lg font-bold">Agent Panel</h1>}
-    
+
         </div>
         <nav className="mt-4 space-y-2">{renderNavItems()}</nav>
       </div>

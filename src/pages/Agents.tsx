@@ -84,34 +84,34 @@ const Agents: React.FC = () => {
 
   type AgentExport = Omit<AgentProps, "_id"> & { No: number };
 
-const exportToXLSX = (): void => {
-  const dataToExport: AgentExport[] = filteredAgents.map(({  _id, createdAt, updatedAt, __v, ...rest }, index) => ({
-    No: index + 1,
-    ...rest,
-  }));
+  const exportToXLSX = (): void => {
+    const dataToExport: AgentExport[] = filteredAgents.map(({ _id, createdAt, updatedAt, __v, ...rest }, index) => ({
+      No: index + 1,
+      ...rest,
+    }));
 
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
-  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Agents");
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Agents");
 
-  const excelBuffer: any = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-  const blob: Blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    const excelBuffer: any = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob: Blob = new Blob([excelBuffer], { type: "application/octet-stream" });
 
-  saveAs(blob, "agents.xlsx");
-};
+    saveAs(blob, "agents.xlsx");
+  };
 
-const exportToCSV = (): void => {
-  const dataToExport: AgentExport[] = filteredAgents.map(({  _id, createdAt, updatedAt, __v, ...rest }, index) => ({
-    No: index + 1,
-    ...rest,
-  }));
+  const exportToCSV = (): void => {
+    const dataToExport: AgentExport[] = filteredAgents.map(({ _id, createdAt, updatedAt, __v, ...rest }, index) => ({
+      No: index + 1,
+      ...rest,
+    }));
 
-  const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
-  const csv: string = XLSX.utils.sheet_to_csv(worksheet);
-  const blob: Blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+    const csv: string = XLSX.utils.sheet_to_csv(worksheet);
+    const blob: Blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
 
-  saveAs(blob, "agents.csv");
-};
+    saveAs(blob, "agents.csv");
+  };
 
   return (
     <div className="max-w-screen grid justify-center md:block mx-auto p-4 bg-white rounded shadow pr-5">
@@ -187,19 +187,19 @@ const exportToCSV = (): void => {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={5} className="text-center py-6">
+                <td colSpan={6} className="text-center py-6">
                   Loading agents...
                 </td>
               </tr>
             ) : isError ? (
               <tr>
-                <td colSpan={5} className="text-center py-6 text-red-600">
+                <td colSpan={6} className="text-center py-6 text-red-600">
                   {`Error: ${(error as Error)?.message}`}
                 </td>
               </tr>
             ) : currentAgents.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-6">
+                <td colSpan={6} className="text-center py-6">
                   No agents found.
                 </td>
               </tr>
@@ -213,23 +213,23 @@ const exportToCSV = (): void => {
                   <td className="border border-gray-300 px-4 py-2">{agent.location}</td>
                   <td className="border border-gray-300 px-4 py-2">
                     <button
-                    className=' py-2 px-2 rounded-md cursor-pointer text-amber-600 transition-colors'
-                    onClick={()=>navigate(`update-agent/${agent._id}`)}
+                      className=' py-2 px-2 rounded-md cursor-pointer text-amber-600 transition-colors'
+                      onClick={() => navigate(`update-agent/${agent._id}`)}
                     >
-                      <MdModeEdit size={22}/>
+                      <MdModeEdit size={22} />
 
                     </button>
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
                     <button
-                    className=' py-2 px-2 rounded-md cursor-pointer text-red-500 transition-colors'
-                  
+                      className=' py-2 px-2 rounded-md cursor-pointer text-red-500 transition-colors'
+
                     >
-                      
-                      <FaTrashCan size={22}/>
+
+                      <FaTrashCan size={22} />
                     </button>
                   </td>
-        
+
                 </tr>
               ))
             )}
@@ -254,10 +254,10 @@ const exportToCSV = (): void => {
                 onClick={() => typeof page === "number" && goToPage(page)}
                 disabled={page === "..."}
                 className={`px-3 py-1 text-sm font cursor-pointer-medium rounded-md ${page === currentPage
-                    ? "bg-primary text-white"
-                    : page === "..."
-                      ? "text-gray-400 cursor-not-allowed"
-                      : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                  ? "bg-primary text-white"
+                  : page === "..."
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
                   }`}
               >
                 {page}
