@@ -142,7 +142,6 @@ const Agents: React.FC = () => {
       <h1 className="text-2xl font-semibold mb-4 text-center md:text-left">All Agents</h1>
 
       <div className="flex flex-col md:flex-row md:justify-between gap-3 mb-4 mt-2 mr-3">
-        {/* Export buttons - you can hook up export functions here */}
         <div className="flex gap-2">
           <button className="px-3 py-1 cursor-pointer bg-primary text-white rounded text-sm hover:brightness-90 transition" onClick={exportToCSV}>
             Export CSV

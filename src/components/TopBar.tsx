@@ -29,7 +29,7 @@ const Topbar: React.FC<TopbarProps> = ({  toggleCollapse, toggleMobile }) => {
         </Link>
         
       </div>
-      <div>{/* Add right side stuff here */}</div>
+      <div></div>
     </header>
   );
 };
