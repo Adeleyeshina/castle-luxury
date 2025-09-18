@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { allAgent, deleteAgent } from "../api/agentService";
-import type { AgentProps} from "../api/agentService";
+import type { AgentProps } from "../api/agentService";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { MdModeEdit } from "react-icons/md";
@@ -24,20 +24,20 @@ const Agents: React.FC = () => {
     queryFn: allAgent,
   });
 
-  const {mutate, isPending} = useMutation({
-    mutationKey : ['deleteAgent', agentId],
-    mutationFn : (id : string)=> deleteAgent(id),
-    onSuccess : (response) => {
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['deleteAgent', agentId],
+    mutationFn: (id: string) => deleteAgent(id),
+    onSuccess: (response) => {
       toast.success(response.message || 'Deleted Successfully'),
-      setModal(false)
+        setModal(false)
       queryClient.invalidateQueries({
-        queryKey : ["allAgent"]
+        queryKey: ["allAgent"]
       })
     },
-    onError : (response :any) => {
+    onError: (response: any) => {
       toast.error(response.message || 'An Error occured')
       setModal(false)
-    } 
+    }
   })
   const agents: AgentProps[] = data || [];
 
@@ -195,7 +195,7 @@ const Agents: React.FC = () => {
         </div>
       </div>
 
-      <div className="overflow-auto h-75 max-w-full border border-gray-200 rounded mr-3 ">
+      <div className="overflow-auto h-[45vh] xl:h-[47vh] max-w-full border border-gray-200 rounded mr-3 ">
         <table className="min-w-full table-auto whitespace-nowrap text-center">
           <thead className="bg-gray-100">
             <tr>
@@ -302,15 +302,15 @@ const Agents: React.FC = () => {
 
 
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-    
+
           <div
             className="absolute inset-0 bg-black/30 backdrop-blur-sm"
-            onClick={() => setModal(false)} 
+            onClick={() => setModal(false)}
           ></div>
 
-    
+
           <div className="relative z-10 p-6 bg-white rounded shadow-lg w-[90%] md:max-w-md text-center space-y-2">
-   
+
             <div className="flex justify-end">
               <button
                 onClick={() => setModal(false)}
@@ -320,16 +320,16 @@ const Agents: React.FC = () => {
               </button>
             </div>
 
-          
+
             <h2 className="text-xl font-semibold text-gray-800">Confirm Delete</h2>
             <p className="text-sm text-gray-600 mt-2">
               Are you sure you want to delete this agent? This action cannot be undone.
             </p>
 
             <button disabled={isPending} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-[0.7] cursor-pointer w-full"
-            onClick={()=>mutate(agentId)}
+              onClick={() => mutate(agentId)}
             >
-             {isPending ? 'Deleting..' : 'Delete'}
+              {isPending ? 'Deleting..' : 'Delete'}
             </button>
 
           </div>

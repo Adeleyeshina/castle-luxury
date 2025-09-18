@@ -1,6 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import { navLink } from '../data';
+import { useAuthStore } from '../store/useAuthStore';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { logout } from '../api/authService';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -10,6 +14,26 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed, mobileOpen, setMobileOpen }) => {
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: logout,
+    onSuccess: (response: any) => {
+      toast.success(response.message || 'LoggedOut successfully')
+      const { setUser } = useAuthStore.getState();
+      setUser(null);
+      window.location.href = "/login"
+      queryClient.clear();
+    },
+    onError : (error : any) => {
+      toast.error(error.response.data.message || 'An error occures')
+    }
+  })
+
+  const handleLogout = () => {
+    mutate()
+  }
 
 
   const renderNavItems = () => (
@@ -33,9 +57,9 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, mobileOpen, setMobileOpen 
       })}
       <button
         className=" flex items-center gap-3 px-4 py-2 rounded-md transition-colors hover:bg-primary/80 cursor-pointer"
-
+        onClick={handleLogout}
       >
-        <FaSignOutAlt className="mx-auto text-white" size={23}/>
+        <FaSignOutAlt className="mx-auto text-white" size={23} />
         {!collapsed && "Logout"}
 
 
