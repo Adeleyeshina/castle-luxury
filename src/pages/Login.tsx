@@ -30,7 +30,7 @@ const Login = () => {
       navigate ("/")
     },
     onError : (error : any) => {
-      toast.error(error.response.data.message || 'Error loggin in')
+      toast.error(error.response.data.message || 'An error occured')
     },
     retry : false
   })
