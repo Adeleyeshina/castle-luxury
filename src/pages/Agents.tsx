@@ -195,7 +195,7 @@ const Agents: React.FC = () => {
         </div>
       </div>
 
-      <div className="overflow-auto h-[45vh] xl:h-[47vh] 2xl:h-[57vh] max-w-full border border-gray-200 rounded mr-3 ">
+      <div className="overflow-auto h-[45vh] xl:h-[47vh] 2xl:h-[55vh] max-w-full border border-gray-200 rounded mr-3 ">
         <table className="min-w-full table-auto whitespace-nowrap text-center">
           <thead className="bg-gray-100">
             <tr>
