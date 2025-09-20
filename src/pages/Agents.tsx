@@ -138,7 +138,7 @@ const Agents: React.FC = () => {
     setModal(true)
   }
   return (
-    <div className="max-w-screen grid justify-center md:block mx-auto p-4 bg-white rounded shadow pr-5">
+    <div className="max-w-screen grid justify-center md:block mx-auto p-4 bg-white rounded shadow">
       <h1 className="text-2xl font-semibold mb-4 text-center md:text-left">All Agents</h1>
 
       <div className="flex flex-col md:flex-row md:justify-between gap-3 mb-4 mt-2 mr-3">
@@ -173,7 +173,7 @@ const Agents: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-2 text-sm text-gray-600 pr-3">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-2 text-sm text-gray-600">
         <p>
           Showing {totalItems === 0 ? 0 : startIndex + 1} to {Math.min(endIndex, totalItems)} of {totalItems} agents
         </p>
