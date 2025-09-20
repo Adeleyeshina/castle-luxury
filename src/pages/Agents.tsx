@@ -336,7 +336,7 @@ const Agents: React.FC = () => {
             <button disabled={isPending} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-[0.7] cursor-pointer w-full"
               onClick={() => mutate(agentId)}
             >
-              {isPending ? 'Deleting..' : 'Delete'}
+              {isPending ? 'Deleting...' : 'Delete'}
             </button>
 
           </div>
