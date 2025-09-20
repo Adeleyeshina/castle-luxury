@@ -13,7 +13,7 @@ import { useAuthStore } from '../store/useAuthStore'
 
 
 const Login = () => {
-  const setUser = useAuthStore((state)=> state.setUser)
+  const setUser = useAuthStore((state) => state.setUser)
   const navigate = useNavigate()
   const {
     register,
@@ -23,19 +23,19 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   const mutation = useMutation({
-    mutationKey : ['login'],
-    mutationFn : login,
-    onSuccess : (data)=> {
+    mutationKey: ['login'],
+    mutationFn: login,
+    onSuccess: (data) => {
       setUser(data)
-      navigate ("/")
+      navigate("/")
     },
-    onError : (error : any) => {
+    onError: (error: any) => {
       toast.error(error.response.data.message || 'An error occured')
     },
-    retry : false
+    retry: false
   })
 
-  const onSubmit : SubmitHandler<LoginPayload>  = (data) => {
+  const onSubmit: SubmitHandler<LoginPayload> = (data) => {
     mutation.mutate(data)
   }
 

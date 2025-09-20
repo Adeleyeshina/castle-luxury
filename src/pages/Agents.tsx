@@ -195,7 +195,7 @@ const Agents: React.FC = () => {
         </div>
       </div>
 
-      <div className="overflow-auto h-[45vh] xl:h-[47vh] 2xl:h-[55vh] max-w-full border border-gray-200 rounded mr-3 ">
+      <div className="overflow-auto h-[43vh] xl:h-[47vh] 2xl:h-[55vh] max-w-full border border-gray-200 rounded mr-3 ">
         <table className="min-w-full table-auto whitespace-nowrap text-center">
           <thead className="bg-gray-100">
             <tr>
@@ -259,28 +259,29 @@ const Agents: React.FC = () => {
           </tbody>
         </table>
       </div>
-
       {totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 pt-2 bg-white border-t border-gray-200 mt-4">
-          <button
-            onClick={goToPrevious}
-            disabled={currentPage === 1}
-            className="px-3 py-1 text-sm font-medium text-gray-500 cursor-pointer bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Previous
-          </button>
+        <div className="flex items-center justify-between mt-4 px-4 pt-2 bg-white border-t border-gray-200">
+          <div className="flex items-center">
+            <button
+              onClick={goToPrevious}
+              disabled={currentPage === 1}
+              className="px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+          </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-2">
             {getPageNumbers().map((page, index) => (
               <button
-                key={`page-${index}`}
-                onClick={() => typeof page === "number" && goToPage(page)}
-                disabled={page === "..."}
-                className={`px-3 py-1 text-sm font cursor-pointer-medium rounded-md ${page === currentPage
-                  ? "bg-primary text-white"
-                  : page === "..."
-                    ? "text-gray-400 cursor-not-allowed"
-                    : "text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                key={index}
+                onClick={() => typeof page === 'number' && goToPage(page)}
+                disabled={page === '...'}
+                className={`px-3 py-1 text-sm font-medium rounded-md ${page === currentPage
+                  ? 'bg-primary text-white'
+                  : page === '...'
+                    ? 'text-gray-400 cursor-not-allowed'
+                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
                   }`}
               >
                 {page}
@@ -288,13 +289,19 @@ const Agents: React.FC = () => {
             ))}
           </div>
 
-          <button
-            onClick={goToNext}
-            disabled={currentPage === totalPages}
-            className="px-3 cursor-pointer py-1 text-sm  font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Next
-          </button>
+          <div className="md:hidden text-sm text-gray-700">
+            Page {currentPage} of {totalPages}
+          </div>
+
+          <div className="flex items-center">
+            <button
+              onClick={goToNext}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
 
