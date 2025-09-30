@@ -6,12 +6,14 @@ import { useEffect } from 'react'
 
 export const currentUser = () => {
     const setUser = useAuthStore.getState().setUser
+    const user = useAuthStore.getState().user
 
     const query = useQuery<Profile>({
         queryKey: ['me'],
         queryFn: profile,
         staleTime: 1000 * 60 * 10,
-        retry : false
+        retry : false,
+        enabled : !!user
     })
     useEffect(()=> {
         if(query.data) {
